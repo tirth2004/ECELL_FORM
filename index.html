@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>E-Cell</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <style>
+    .container {
+      margin-top: 50px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      font-weight: bold;
+    }
+
+    .btn-submit {
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    .btn-submit:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Submit Form</h2>
+    <form id="myForm">
+      <div class="form-group">
+        <label for="name" class="form-label">Name:</label>
+        <input type="text" class="form-control" id="name" required>
+      </div>
+      <div class="form-group">
+        <label for="branch" class="form-label">Branch:</label>
+        <input type="text" class="form-control" id="branch" required>
+      </div>
+      <div class="form-group">
+        <label for="email" class="form-label">Email:</label>
+        <input type="email" class="form-control" id="email" required>
+      </div>
+      <div class="form-group">
+        <label for="phone" class="form-label">Phone Number:</label>
+        <input type="tel" class="form-control" id="phone" required>
+      </div>
+      <button type="submit" class="btn btn-submit">Submit</button>
+    </form>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-firestore.js"></script>
+  <script>
+    
+    const firebaseConfig = {
+        apiKey: "AIzaSyA0hA2Bc74PEzeuoahNApERIEkxFqv_jSo",
+        authDomain: "techteamexpansion23.firebaseapp.com",
+        projectId: "techteamexpansion23",
+        storageBucket: "techteamexpansion23.appspot.com",
+        messagingSenderId: "542718392377",
+        appId: "1:542718392377:web:bf6178e1b28494fe8c35e8",
+        measurementId: "G-39B1R2EWV2"
+    };
+    firebase.initializeApp(firebaseConfig);
+  
+    
+    const db = firebase.firestore();
+  
+    
+    document.getElementById('myForm').addEventListener('submit', submitForm);
+  
+    function submitForm(event) {
+      event.preventDefault(); 
+  
+      
+      const name = document.getElementById('name').value;
+      const branch = document.getElementById('branch').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+  
+      
+      db.collection(`TirthComputerScience`).doc().set({
+        Name: name,
+        Branch: branch,
+        Email: email,
+        PhoneNumber: phone
+      })
+      .then(() => {
+        document.getElementById('name').value = '';
+        document.getElementById('branch').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('phone').value = '';
+  
+        alert('Form submitted successfully!');
+      })
+      .catch(error => {
+        console.error('Error submitting form:', error);
+        alert('An error occurred while submitting the form. Please try again.');
+      });
+    }
+  </script>
+</body>
+</html>
